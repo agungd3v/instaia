@@ -1,2 +1,6 @@
 @import url('./css/tailwind.css');
 @import url('./css/font.css');
+
+* {
+    outline: none !important;
+}
