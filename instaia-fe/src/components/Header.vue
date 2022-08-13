@@ -10,7 +10,7 @@ import UserBlank from '@/assets/icons/UserBlank.vue'
 
 <template>
     <div class="w-full h-14">
-        <div class="h-14 fixed w-full bg-white border-b">
+        <div class="h-14 fixed w-full bg-white border-b z-10">
             <div class="h-full flex justify-center">
                 <div class="w-8/12 flex items-center justify-between">
                     <RouterLink to="/" class="font-semibold text-2xl leading-none">Instaia</RouterLink>
@@ -25,7 +25,7 @@ import UserBlank from '@/assets/icons/UserBlank.vue'
                             <ExploreIcon />
                         </RouterLink>
                         <div class="cursor-pointer">
-                            <ActivityIcon />
+                            <ActivityIcon :width="22" :height="22" />
                         </div>
                         <div class="cursor-pointer">
                             <UserBlank />

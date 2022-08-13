@@ -9,7 +9,7 @@
                 </div>
             </Slide>
         </Carousel>
-        <div class="absolute inset-y-0 left-0 flex items-center" v-if="currentReel > 0">
+        <div class="absolute inset-y-0 left-3 flex items-center" v-if="currentReel > 0">
             <button
                 class="bg-white w-7 h-7 rounded-full flex justify-center items-center left-0"
                 @click="prev"
@@ -17,7 +17,7 @@
                 <ArrowLeft />
             </button>
         </div>
-        <div class="absolute inset-y-0 right-0 flex items-center">
+        <div class="absolute inset-y-0 right-3 flex items-center">
             <button
                 class="bg-white w-7 h-7 rounded-full flex justify-center items-center right-0"
                 @click.prevent="next"
