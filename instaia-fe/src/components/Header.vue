@@ -1,11 +1,13 @@
 <script setup>
+import { useUserStore } from '@/store/user'
 import { RouterLink } from 'vue-router'
 import HomeIcon from '@/assets/icons/HomeIcon.vue'
-import MessageIcon from '@/assets/icons/MessageIcon.vue'
 import PostIcon from '@/assets/icons/PostIcon.vue'
 import ExploreIcon from '@/assets/icons/ExploreIcon.vue'
 import ActivityIcon from '@/assets/icons/ActivityIcon.vue'
 import UserBlank from '@/assets/icons/UserBlank.vue'
+
+const userState = useUserStore()
 </script>
 
 <template>
@@ -28,7 +30,10 @@ import UserBlank from '@/assets/icons/UserBlank.vue'
                             <ActivityIcon :width="22" :height="22" />
                         </div>
                         <div class="cursor-pointer">
-                            <UserBlank />
+                            <UserBlank v-if="userState.user.photo" />
+                            <div v-else class="rounded-full" style="width: 26px; height: 26px">
+                                <img src="https://avatars.githubusercontent.com/u/63272845?v=4" class="object-cover rounded-full">
+                            </div>
                         </div>
                     </div>
                 </div>
