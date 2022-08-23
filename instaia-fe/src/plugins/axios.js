@@ -1,16 +1,12 @@
 import axios from 'axios'
-import { createPinia } from 'pinia'
 import { useUserStore } from '@/store/user'
-
-const pinia = createPinia()
-const store = useUserStore(pinia)
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
 axios.interceptors.request.use(
     function (config) {
-        const token = store.token
-        config.headers.common['Authorization'] = token ? `Bearer ${token}` : ''
+        const user = useUserStore()
+        config.headers.common['Authorization'] = user.token ? `Bearer ${user.token}` : ''
         config.headers.post['Content-Type'] = 'application/json'
         return config
     },

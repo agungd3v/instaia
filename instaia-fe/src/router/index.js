@@ -6,19 +6,25 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import('../views/HomeView.vue'),
+      component: () => import('../layouts/DefaultLayout.vue'),
       meta: {
         auth: true
-      }
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue'),
-      meta: {
-        auth: true
-      }
+      },
+      children: [
+        {
+          path: '',
+          name: 'home',
+          component: () => import('../views/Home.vue')
+        },
+        {
+          path: '/:username',
+          name: 'profile',
+          component: () => import('../views/Profile.vue'),
+          meta: {
+            auth: true
+          }
+        },
+      ]
     },
     {
       path: '/login',
