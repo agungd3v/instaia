@@ -1,9 +1,15 @@
 const router = require('express').Router()
-const middleware = require('../middleware/index')
+const { requestOrigin, requestAuth } = require('../middleware/index')
 const UserController = require('../controllers/UserController')
+const PostController = require('../controllers/PostController')
 
-router.use(middleware)
+router.use(requestOrigin)
+
 router.post('/signup', UserController.signup)
 router.post('/signin', UserController.signin)
+
+router.use(requestAuth)
+
+router.get('/posts', PostController.getPosts)
 
 module.exports = router

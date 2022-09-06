@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const { response } = require('../helpers/response')
 const { make, verify } = require('../helpers/hash')
+const jwt = require('jsonwebtoken')
 
 module.exports = {
     signup: async (req, res) => {
@@ -24,9 +25,11 @@ module.exports = {
             if (user) {
                 const checkPassword = await verify(password, user.password)
                 if (checkPassword) {
+                    const accessToken = jwt.sign({ id: user.id }, process.env.APP_TOKEN, { expiresIn: '1d' })
                     return response(res, {
                         name: user.name,
-                        email: user.email
+                        email: user.email,
+                        accessToken: accessToken
                     })
                 }
                 throw "email atau password salah"
