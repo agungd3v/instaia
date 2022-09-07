@@ -21,7 +21,7 @@ module.exports = {
     signin: async (req, res) => {
         try {
             const { email, password } = req.body
-            const user = await User.findOne({ where: { email: email } })
+            const user = await User.findOne({ where: { email: email }, include: 'posts' })
             if (user) {
                 const checkPassword = await verify(password, user.password)
                 if (checkPassword) {
@@ -29,6 +29,7 @@ module.exports = {
                     return response(res, {
                         name: user.name,
                         email: user.email,
+                        posts: user.posts,
                         accessToken: accessToken
                     })
                 }

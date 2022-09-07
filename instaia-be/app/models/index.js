@@ -13,7 +13,7 @@ const connection = new Sequelize('instaia', 'root', 'root', {
 })
 
 const models = [
-    'User'
+    'User', 'Post'
 ]
 
 models.forEach((model) => {

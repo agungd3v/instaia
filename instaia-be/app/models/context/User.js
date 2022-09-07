@@ -2,7 +2,12 @@ const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
-        static associate(models) {}
+        static associate(models) {
+            this.hasMany(models.Post, {
+                foreignKey: 'user_id',
+                as: 'posts'
+            })
+        }
     }
     User.init({
         name: DataTypes.STRING,
@@ -12,12 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         tableName: 'users',
         createdAt: 'created_at',
-        updatedAt: 'updated_at',
-        // defaultScope: {
-        //     attributes: {
-        //         exclude: ['password']
-        //     }
-        // }
+        updatedAt: 'updated_at'
     })
     return User
 }
