@@ -27,10 +27,11 @@ module.exports = {
                 if (checkPassword) {
                     const accessToken = jwt.sign({ id: user.id }, process.env.APP_TOKEN, { expiresIn: '1d' })
                     return response(res, {
-                        name: user.name,
-                        email: user.email,
-                        posts: user.posts,
-                        accessToken: accessToken
+                        user: {
+                            name: user.name,
+                            email: user.email,
+                        },
+                        token: accessToken
                     })
                 }
                 throw "email atau password salah"
