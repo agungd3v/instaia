@@ -61,8 +61,8 @@ export default {
     methods: {
         async handleSubmit() {
             try {
-                const http = await this.$axios.post('/accounts/login', {
-                    username: this.username,
+                const http = await this.$axios.post('/signin', {
+                    email: this.username,
                     password: this.password
                 })
                 if (http) {
