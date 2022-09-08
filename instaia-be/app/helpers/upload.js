@@ -15,4 +15,9 @@ const single = (file, exist) => {
     return { status: true, path: '/images/' + fileName }
 }
 
-module.exports = { single }
+const remove = (pathExist) => {
+    fs.unlinkSync(path.join(path.dirname(require.main.filename), '/public/' + pathExist))
+    return true
+}
+
+module.exports = { single, remove }

@@ -1,6 +1,6 @@
 const { Post } = require('../models')
 const { response } = require('../helpers/response')
-const { single } = require('../helpers/upload')
+const { single, remove } = require('../helpers/upload')
 
 module.exports = {
     store: async (req, res) => {
@@ -37,6 +37,20 @@ module.exports = {
             post.description = description
             await post.save()
             return response(res, post.content.split('/')[post.content.split('/').length - 1])
+        } catch (error) {
+            return response(res, error, +500)
+        }
+    },
+    delete: async (req, res) => {
+        try {
+            const { postid } = req.params
+            const post = await Post.findOne({ where: { id: postid } })
+            if (!post) throw 'post not found'
+            if (post.user_id != req.user.id) throw 'post not for you'
+
+            remove(post.content)
+            await Post.destroy({ where: { id: postid } })
+            return response(res, 'Deleting ok')
         } catch (error) {
             return response(res, error, +500)
         }

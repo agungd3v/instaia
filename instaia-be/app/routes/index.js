@@ -16,5 +16,6 @@ router.use(requestAuth)
 
 router.post('/post', PostController.store)
 router.put('/post/:postid', PostController.update)
+router.delete('/post/:postid', PostController.delete)
 
 module.exports = router
