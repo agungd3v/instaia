@@ -7,7 +7,7 @@ module.exports = {
         try {
             const { images } = req.files
             const { description } = req.body
-            const upload = single(images, null)
+            const upload = single(images, 'posts', null)
             if (!upload.status) throw upload.message
 
             const store = await Post.create({
@@ -30,7 +30,7 @@ module.exports = {
             if (post.user_id != req.user.id) throw 'post not for you'
 
             if (images) {
-                const upload = single(images, post.content)
+                const upload = single(images, 'posts', post.content)
                 if (!upload.status) throw upload.message
                 post.content = upload.path
             }

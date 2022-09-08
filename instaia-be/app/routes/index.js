@@ -13,7 +13,9 @@ router.post('/signup', UserController.signup)
 router.post('/signin', UserController.signin)
 
 router.use(requestAuth)
-
+// User router
+router.post('/avatar', UserController.changePhoto)
+// Post route
 router.post('/post', PostController.store)
 router.put('/post/:postid', PostController.update)
 router.delete('/post/:postid', PostController.delete)

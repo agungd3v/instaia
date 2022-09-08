@@ -12,10 +12,24 @@ module.exports = {
                 type: sequelize.DataTypes.STRING,
                 allowNull: false
             },
+            username: {
+                type: sequelize.DataTypes.STRING,
+                allowNull: false,
+                unique: true
+            },
             email: {
                 type: sequelize.DataTypes.STRING,
                 allowNull: false,
                 unique: true
+            },
+            phone: {
+                type: sequelize.DataTypes.STRING,
+                allowNull: false,
+                unique: true
+            },
+            photo: {
+                type: sequelize.DataTypes.STRING,
+                allowNull: true
             },
             password: {
                 type: sequelize.DataTypes.STRING,

@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 
-const single = (file, exist) => {
+const single = (file, destination, exist) => {
     if (exist) fs.unlinkSync(path.join(path.dirname(require.main.filename), '/public/' + exist))
 
     let valid = false
@@ -10,9 +10,9 @@ const single = (file, exist) => {
     if (!valid) return { status: false, message: 'format file tidak valid' }
 
     const fileName = require('crypto').randomBytes(8).toString('hex') + '.jpg'
-    const pathDirectory = path.join(path.dirname(require.main.filename), '/public/images/') + fileName
+    const pathDirectory = path.join(path.dirname(require.main.filename), '/public/images/' + destination + '/') + fileName
     file.mv(pathDirectory)
-    return { status: true, path: '/images/' + fileName }
+    return { status: true, path: '/images/' + destination + '/' + fileName }
 }
 
 const remove = (pathExist) => {
