@@ -14,6 +14,7 @@ router.post('/signin', UserController.signin)
 
 router.use(requestAuth)
 
-router.post('/posts', PostController.getPosts)
+router.post('/post', PostController.store)
+router.put('/post/:postid', PostController.update)
 
 module.exports = router

@@ -1,6 +1,9 @@
 const path = require('path')
+const fs = require('fs')
 
-const single = (file) => {
+const single = (file, exist) => {
+    if (exist) fs.unlinkSync(path.join(path.dirname(require.main.filename), '/public/' + exist))
+
     let valid = false
     const allowType = ['image/jpeg', 'image/png']
     allowType.forEach(mime => file.mimetype == mime ? valid = true : '')
