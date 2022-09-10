@@ -2,7 +2,10 @@
   <div class="flex justify-center">
     <div class="w-7/12 mt-5">
       <div class="mb-8 flex justify-center items-center">
-        <div class="w-48 h-48 rounded-full border-4 border-white overflow-hidden">
+        <div
+          class="w-48 h-48 rounded-full border-4 border-white overflow-hidden cursor-pointer"
+          @click="openChangeProfile = true"
+        >
           <img src="https://avatars.githubusercontent.com/u/63272845?v=4" class="w-48 h-48 object-cover" />
         </div>
       </div>
@@ -43,16 +46,23 @@
       </div>
     </div>
   </div>
+  <ModalChangePhotoVue :open="openChangeProfile" @open="openChangeProfile = false" />
 </template>
 
 <script>
+import ModalChangePhotoVue from '@/components/ModalChangePhoto.vue'
 export default {
+  components: {
+    ModalChangePhotoVue
+  },
   data() {
     return {
       posts: false,
       saved: false,
-      tagged: false
+      tagged: false,
+      openChangeProfile: false
     }
-  }
+  },
+  methods: {}
 }
 </script>
