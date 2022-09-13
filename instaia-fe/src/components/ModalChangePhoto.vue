@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useUserStore } from '@/store/user'
 import { VueFinalModal } from 'vue-final-modal'
 import ImageIcon from '@/assets/icons/ImageIcon.vue'
 export default {
@@ -32,15 +34,33 @@ export default {
     props: {
         open: Boolean
     },
+    computed: {
+        ...mapStores(useUserStore)
+    },
     watch: {
         open(bool) {
             if (!bool) return this.$emit('open')
         }
     },
     methods: {
-        changeProfile() {
-            const fileImage = this.$refs.browse.files[0]
-            console.log(fileImage)
+        async changeProfile() {
+            try {
+                const fileImage = this.$refs.browse.files[0]
+                const fd = new FormData()
+                fd.append('image', fileImage)
+                const store = await this.$axios.post('/avatar', fd)
+                if (store.status) {
+                    const storage = JSON.parse(localStorage.getItem('instaia'))
+                    if (storage) {
+                        storage['user'] = store.data
+                        localStorage.setItem('instaia', JSON.stringify(storage))
+                        this.userStore.setUser(store.data)
+                        return this.$emit('open')
+                    }
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 }
