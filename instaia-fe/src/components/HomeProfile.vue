@@ -8,7 +8,7 @@
             class="w-14 h-14 border rounded-full overflow-hidden cursor-pointer"
             style="border-width: 3px"
         >
-            <img src="https://avatars.githubusercontent.com/u/63272845?v=4" class="w-14 h-14 object-cover">
+            <img :src="getProfileImage()" class="w-14 h-14 object-cover">
         </div>
         <div class="flex flex-col">
             <span class="text-sm">{{ userStore.user.username }}</span>
@@ -33,6 +33,10 @@ export default {
                     username: this.userStore.user.username
                 }
             })
+        },
+        getProfileImage() {
+            if (this.userStore.user.photo) return import.meta.env.VITE_STATIC_ASSET + this.userStore.user.photo
+            return '@/assets/default.png'
         }
     }
 }

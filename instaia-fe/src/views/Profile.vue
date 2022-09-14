@@ -6,7 +6,7 @@
           class="w-48 h-48 rounded-full border-4 border-white overflow-hidden cursor-pointer"
           @click="openChangeProfile = true"
         >
-          <img src="https://avatars.githubusercontent.com/u/63272845?v=4" class="w-48 h-48 object-cover" />
+          <img :src="getProfileImage()" class="w-48 h-48 object-cover" />
         </div>
       </div>
       <div class="mb-8 flex items-center justify-center gap-16">
@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useUserStore } from '@/store/user'
 import ModalChangePhotoVue from '@/components/ModalChangePhoto.vue'
 export default {
   components: {
@@ -63,6 +65,15 @@ export default {
       openChangeProfile: false
     }
   },
-  methods: {}
+  computed: {
+    ...mapStores(useUserStore)
+  },
+  mounted() {},
+  methods: {
+    getProfileImage() {
+      if (this.userStore.user.photo) return import.meta.env.VITE_STATIC_ASSET + this.userStore.user.photo
+      return '@/assets/default.png'
+    }
+  }
 }
 </script>
