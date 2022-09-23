@@ -21,7 +21,8 @@
     "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^3.0.1",
-    "sequelize": "^6.21.4"
+    "sequelize": "^6.21.4",
+    "sharp": "^0.31.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19",
