@@ -5,6 +5,7 @@ module.exports = {
         'database': process.env.DB_DATABASE,
         'host': process.env.DB_HOST,
         'dialect': process.env.DB_DRIVER,
+        'storage' : process.env.DB_STORAGE,
         'migrationStorageTableName': 'migrations'
     },
     production: {
@@ -13,6 +14,7 @@ module.exports = {
         'database': process.env.DB_DATABASE,
         'host': process.env.DB_HOST,
         'dialect': process.env.DB_DRIVER,
+        'storage': process.env.DB_STORAGE,
         'migrationStorageTableName': 'migrations'
     }
 }
