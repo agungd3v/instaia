@@ -1,13 +1,13 @@
 const { Post } = require('../models')
 const { response } = require('../helpers/response')
-const { single, remove } = require('../helpers/upload')
+const { remove, uploadPublicPath } = require('../helpers/upload')
 
 module.exports = {
     store: async (req, res) => {
         try {
             const { images } = req.files
             const { description } = req.body
-            const upload = single(images, 'posts', null)
+            const upload = uploadPublicPath(images, 500, 500, 'posts', null)
             if (!upload.status) throw upload.message
 
             const store = await Post.create({
@@ -30,7 +30,7 @@ module.exports = {
             if (post.user_id != req.user.id) throw 'post not for you'
 
             if (images) {
-                const upload = single(images, 'posts', post.content)
+                const upload = uploadPublicPath(images, 500, 500, 'posts', post.content)
                 if (!upload.status) throw upload.message
                 post.content = upload.path
             }

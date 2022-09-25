@@ -1,7 +1,7 @@
 const { User } = require('../models')
 const { response } = require('../helpers/response')
 const { make, verify } = require('../helpers/hash')
-const { uploadAvatar } = require('../helpers/upload')
+const { uploadPublicPath } = require('../helpers/upload')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
@@ -59,7 +59,7 @@ module.exports = {
             const user = await User.findOne({ where: { id: req.user.id } })
             if (!user) throw 'Error'
 
-            const upload = await uploadAvatar(image, user.photo ?? null)
+            const upload = await uploadPublicPath(image, 300, 300, 'avatars', user.photo ?? null)
             if (!upload.status) throw upload.message
 
             user.photo = upload.path
