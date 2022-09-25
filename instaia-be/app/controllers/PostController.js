@@ -7,7 +7,7 @@ module.exports = {
         try {
             const { images } = req.files
             const { description } = req.body
-            const upload = uploadPublicPath(images, 500, 500, 'posts', null)
+            const upload = await uploadPublicPath(images, 500, 500, 'posts', null)
             if (!upload.status) throw upload.message
 
             const store = await Post.create({
@@ -30,7 +30,7 @@ module.exports = {
             if (post.user_id != req.user.id) throw 'post not for you'
 
             if (images) {
-                const upload = uploadPublicPath(images, 500, 500, 'posts', post.content)
+                const upload = await uploadPublicPath(images, 500, 500, 'posts', post.content)
                 if (!upload.status) throw upload.message
                 post.content = upload.path
             }
