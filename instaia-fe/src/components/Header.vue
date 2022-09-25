@@ -6,6 +6,7 @@ import PostIcon from '@/assets/icons/PostIcon.vue'
 import ExploreIcon from '@/assets/icons/ExploreIcon.vue'
 import ActivityIcon from '@/assets/icons/ActivityIcon.vue'
 import UserBlank from '@/assets/icons/UserBlank.vue'
+import ModalPost from './ModalPost.vue'
 
 const userState = useUserStore()
 </script>
@@ -20,9 +21,9 @@ const userState = useUserStore()
                         <RouterLink to="/">
                             <HomeIcon />
                         </RouterLink>
-                        <RouterLink to="/">
+                        <div class="cursor-pointer" @click="openWritePost = true">
                             <PostIcon />
-                        </RouterLink>
+                        </div>
                         <RouterLink to="/">
                             <ExploreIcon />
                         </RouterLink>
@@ -39,5 +40,16 @@ const userState = useUserStore()
                 </div>
             </div>
         </div>
+        <ModalPost :open="openWritePost" @open="openWritePost = false" />
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            openWritePost: false
+        }
+    }
+}
+</script>

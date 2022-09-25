@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white border rounded py-5 relative">
+    <div class="bg-white border rounded py-5 px-5 relative">
         <Carousel :settings="settings" :breakpoints="breakpoints" ref="reels" v-model="currentReel">
             <Slide v-for="slide in 10" :key="slide">
                 <div class="w-full h-full flex items-center justify-center">
@@ -57,7 +57,7 @@ export default {
                 },
                 // 1024 and up
                 1024: {
-                    itemsToShow: 8,
+                    itemsToShow: 7,
                     snapAlign: 'start',
                 },
             }
