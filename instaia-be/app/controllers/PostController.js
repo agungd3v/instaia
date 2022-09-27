@@ -3,6 +3,14 @@ const { response } = require('../helpers/response')
 const { remove, uploadPublicPath } = require('../helpers/upload')
 
 module.exports = {
+    index: async (req, res) => {
+        try {
+            const posts = Post.findAll({ where: { user_id: req.user.id } })
+            return response(res, posts)
+        } catch (error) {
+            return response(res, error, +500)
+        }
+    },
     store: async (req, res) => {
         try {
             const { images } = req.files

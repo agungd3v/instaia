@@ -16,6 +16,7 @@ router.use(requestAuth)
 // User router
 router.post('/avatar', UserController.changePhoto)
 // Post route
+router.get('/post', PostController.index)
 router.post('/post', PostController.store)
 router.put('/post/:postid', PostController.update)
 router.delete('/post/:postid', PostController.delete)
