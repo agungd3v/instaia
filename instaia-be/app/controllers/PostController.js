@@ -5,7 +5,11 @@ const { remove, uploadPublicPath } = require('../helpers/upload')
 module.exports = {
     index: async (req, res) => {
         try {
-            const posts = Post.findAll({ where: { user_id: req.user.id } })
+            const posts = await Post.findAll({
+                where: {
+                    user_id: req.user.id
+                }
+            })
             return response(res, posts)
         } catch (error) {
             return response(res, error, +500)
