@@ -51,6 +51,34 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    this.fetchPost()
+  },
+  methods: {
+    async fetchPost() {
+      try {
+        const http = await this.$axios.get('/post')
+        if (http.status && http.data.length > 0) {
+          this.postData = http.data.map(data => {
+            return {
+              user: {
+                name: data.user.name,
+                photo: import.meta.env.VITE_STATIC_ASSET + data.user.photo
+              },
+              content: {
+                media: import.meta.env.VITE_STATIC_ASSET + data.content,
+                description: data.description,
+                likes: 10
+              }
+            }
+          })
+          console.log(test)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 }
 </script>
