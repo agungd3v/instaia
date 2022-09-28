@@ -8,7 +8,11 @@ module.exports = {
             const posts = await Post.findAll({
                 where: {
                     user_id: req.user.id
-                }
+                },
+                include: [{
+                    all: true,
+                    attributes: ['name', 'username', 'photo']
+                }]
             })
             return response(res, posts)
         } catch (error) {
