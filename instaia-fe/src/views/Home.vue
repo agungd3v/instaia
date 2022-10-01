@@ -11,7 +11,7 @@ import HomeProfile from '@/components/HomeProfile.vue'
         <div class="col-span-2">
           <Reels />
           <div class="mt-4">
-            <PostSingle :posts="postData" />
+            <PostSingle :posts="postData" @postlike="replaceLikes" />
           </div>
         </div>
         <div>
@@ -23,6 +23,9 @@ import HomeProfile from '@/components/HomeProfile.vue'
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useUserStore } from '@/store/user'
+
 export default {
   data() {
     return {
@@ -33,17 +36,7 @@ export default {
             photo: 'https://avatars.githubusercontent.com/u/63272845?v=4'
           },
           content: {
-            media: 'https://asset.kompas.com/crops/-8_skPad__EKu4DpDs6TSFNWi3c=/0x0:1000x667/750x500/data/photo/2019/12/18/5df9e59f4c8b0.jpg',
-            description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit excepturi iste accusamus tenetur molestiae. Minus officiis odit dicta consectetur autem.',
-            likes: 10
-          },
-        },
-        {
-          user: {
-            name: 'Agung Ardiyanto',
-            photo: 'https://avatars.githubusercontent.com/u/63272845?v=4'
-          },
-          content: {
+            id: 1,
             media: 'https://asset.kompas.com/crops/-8_skPad__EKu4DpDs6TSFNWi3c=/0x0:1000x667/750x500/data/photo/2019/12/18/5df9e59f4c8b0.jpg',
             description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit excepturi iste accusamus tenetur molestiae. Minus officiis odit dicta consectetur autem.',
             likes: 10
@@ -52,6 +45,9 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapStores(useUserStore),
+  },
   mounted() {
     this.fetchPost()
   },
@@ -59,7 +55,6 @@ export default {
     async fetchPost() {
       try {
         const http = await this.$axios.get('/post')
-        console.log(http)
         if (http.status && http.data.length > 0) {
           this.postData = http.data.map(data => {
             return {
@@ -68,17 +63,38 @@ export default {
                 photo: data.user.photo ? import.meta.env.VITE_STATIC_ASSET + data.user.photo : '/default.png'
               },
               content: {
+                id: data.id,
                 media: import.meta.env.VITE_STATIC_ASSET + data.content,
                 description: data.description,
-                likes: data.likes.length
+                likes: data.likes.length,
+                like: data.likes.map(dlike => {
+                  if (dlike.username == this.userStore.user.username) return {
+                    id: dlike.id,
+                    username: dlike.username,
+                    name: dlike.name,
+                    photo: dlike.photo
+                  }
+                }).filter(Boolean)
               }
             }
           })
-          console.log(test)
         }
       } catch (error) {
         console.log(error)
       }
+    },
+    replaceLikes(post) {
+      return this.postData.map(data => {
+        if (data.content.id == post) {
+          data.content.like.push({
+              id: this.userStore.user.id,
+              username: this.userStore.user.username,
+              name: this.userStore.user.name,
+              photo: this.userStore.user.photo
+          })
+          data.content.likes += 1
+        }
+      })
     }
   }
 }

@@ -1,6 +1,7 @@
 <script setup>
 import Smile from '@/assets/icons/Smile.vue'
 import ActivityIcon from '@/assets/icons/ActivityIcon.vue'
+import ActivitySolidIcon from '@/assets/icons/ActivitySolidIcon.vue'
 import CommentIcon from '@/assets/icons/CommentIcon.vue'
 import ShareIcon from '@/assets/icons/ShareIcon.vue'
 </script>
@@ -23,7 +24,19 @@ import ShareIcon from '@/assets/icons/ShareIcon.vue'
             <div class="px-4">
                 <div class="mb-2">
                     <div class="flex items-center gap-3 grow">
-                        <ActivityIcon class="cursor-pointer" :width="26" :height="26" />
+                        <ActivitySolidIcon
+                            class="cursor-pointer"
+                            :width="26"
+                            :height="26"
+                            v-if="post.content.like && post.content.like.length > 0"
+                        />
+                        <ActivityIcon
+                            class="cursor-pointer"
+                            @click="giftLove(post.content.id)"
+                            :width="26"
+                            :height="26"
+                            v-else
+                        />
                         <CommentIcon class="cursor-pointer" :width="24" :height="24" />
                         <ShareIcon class="cursor-pointer" :width="24" :height="24" />
                     </div>
@@ -95,13 +108,23 @@ export default {
         autoHeight(event) {
             const keyCode = event.keyCode || event.which
             if (keyCode === 13 || keyCode.which === 13) {
-                // console.log('ok')
                 event.preventDefault()
                 return false
             } else {
                 const commentBox = this.$refs.comment[0]
                 commentBox.style.height = '24px'
                 commentBox.style.height = commentBox.scrollHeight + 'px'
+            }
+        },
+        async giftLove(post) {
+            this.$emit('postlike', post)
+            try {
+                const http = await this.$axios.post('/postlike', { postid: post })
+                if (http.status) {
+                    console.log(http.data)
+                }
+            } catch (error) {
+                console.log(error)
             }
         },
         leaveAComment() {

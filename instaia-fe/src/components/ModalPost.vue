@@ -56,6 +56,7 @@ import { mapStores } from 'pinia'
 import { useUserStore } from '@/store/user'
 import { VueFinalModal } from 'vue-final-modal'
 import ImageIcon from '@/assets/icons/ImageIcon.vue'
+
 export default {
     components: {
         VueFinalModal,
