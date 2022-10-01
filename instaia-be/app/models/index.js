@@ -8,6 +8,7 @@ const connection = new Sequelize(process.env.DB_DATABASE, process.env.DB_USERNAM
     storage: process.env.DB_STORAGE,
     pool: { max: 5, min: 0, idle: 10000 },
     timezone: process.env.DB_DRIVER == 'sqlite' ? '+00:00' : '+07:00',
+    logging: false
 })
 
 const db = {}

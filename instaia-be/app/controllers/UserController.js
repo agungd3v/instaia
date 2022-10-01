@@ -37,6 +37,7 @@ module.exports = {
                     const accessToken = jwt.sign({ id: user.id }, process.env.APP_TOKEN, { expiresIn: '1d' })
                     return response(res, {
                         user: {
+                            id: user.id,
                             name: user.name,
                             email: user.email,
                             username: user.username,
