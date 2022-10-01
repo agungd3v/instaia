@@ -1,4 +1,4 @@
-const { Post } = require('../models')
+const { Post, sequelize } = require('../models')
 const { response } = require('../helpers/response')
 const { remove, uploadPublicPath } = require('../helpers/upload')
 
@@ -6,13 +6,15 @@ module.exports = {
     index: async (req, res) => {
         try {
             const posts = await Post.findAll({
-                where: {
-                    user_id: req.user.id
-                },
                 include: [{
                     all: true,
-                    attributes: ['name', 'username', 'photo']
-                }]
+                    attributes: {
+                        exclude: ['password', 'email', 'phone', 'created_at', 'updated_at']
+                    }
+                }],
+                order: [
+                    ['id', 'desc']
+                ]
             })
             return response(res, posts)
         } catch (error) {
@@ -67,6 +69,20 @@ module.exports = {
             remove(post.content)
             await Post.destroy({ where: { id: postid } })
             return response(res, 'Deleting ok')
+        } catch (error) {
+            return response(res, error, +500)
+        }
+    },
+    storeLike: async (req, res) => {
+        try {
+            const { postid } = req.body
+            const query = `
+                INSERT INTO post_likes (user_id, post_id, created_at, updated_at)
+                VALUES (${req.user.id}, ${postid}, datetime('now'), datetime('now'))
+            `
+            const like = await sequelize.query(query, { type: sequelize.QueryTypes.INSERT })
+
+            return response(res, 'like success')
         } catch (error) {
             return response(res, error, +500)
         }

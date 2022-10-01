@@ -19,4 +19,5 @@ Object.keys(db).forEach(model => {
     if (db[model].associate) db[model].associate(db)
 })
 
+db.sequelize = connection
 module.exports = db

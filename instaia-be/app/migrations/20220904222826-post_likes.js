@@ -2,7 +2,7 @@
 
 module.exports = {
     up: (queryInterface, sequelize) => {
-        return queryInterface.createTable('posts', {
+        return queryInterface.createTable('post_likes', {
             id: {
                 type: sequelize.DataTypes.INTEGER,
                 autoIncrement: true,
@@ -16,19 +16,19 @@ module.exports = {
                     key: 'id'
                 }
             },
-            content: {
-                type: sequelize.DataTypes.STRING,
-                allowNull: false
-            },
-            description: {
-                type: sequelize.DataTypes.TEXT,
-                allowNull: false
+            post_id: {
+                type: sequelize.DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'posts',
+                    key: 'id'
+                }
             },
             created_at: sequelize.DataTypes.DATE,
             updated_at: sequelize.DataTypes.DATE
         })
     },
     down: (queryInterface) => {
-        return queryInterface.dropTable('posts')
+        return queryInterface.dropTable('post_likes')
     }
 }

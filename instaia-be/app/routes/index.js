@@ -20,5 +20,6 @@ router.get('/post', PostController.index)
 router.post('/post', PostController.store)
 router.put('/post/:postid', PostController.update)
 router.delete('/post/:postid', PostController.delete)
+router.post('/postlike', PostController.storeLike)
 
 module.exports = router

@@ -5,7 +5,16 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             this.belongsTo(models.User, {
                 foreignKey: 'user_id',
-                as: 'user'
+                as: 'user',
+                onDelete: 'cascade',
+            })
+            this.belongsToMany(models.User, {
+                through: 'post_likes',
+                foreignKey: 'post_id',
+                otherKey: 'user_id',
+                as: 'likes',
+                onDelete: 'cascade',
+                timestamps: false
             })
         }
     }
