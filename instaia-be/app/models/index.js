@@ -16,9 +16,7 @@ const models = context.map(data => data.split('.')[0])
 models.forEach((model) => db[model] = require(path.join(__dirname, '/context/' + model))(connection, Sequelize.DataTypes))
 
 Object.keys(db).forEach(model => {
-    if (db[model].associate) {
-        db[model].associate(db)
-    }
+    if (db[model].associate) db[model].associate(db)
 })
 
 module.exports = db
