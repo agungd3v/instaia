@@ -33,7 +33,7 @@ const userState = useUserStore()
                         <div class="cursor-pointer">
                             <UserBlank v-if="userState.user.photo" />
                             <div v-else class="rounded-full" style="width: 26px; height: 26px">
-                                <img src="https://avatars.githubusercontent.com/u/63272845?v=4" class="object-cover rounded-full">
+                                <img :src="getProfileImage()" class="object-cover rounded-full">
                             </div>
                         </div>
                     </div>
@@ -45,10 +45,22 @@ const userState = useUserStore()
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useUserStore } from '@/store/user'
+
 export default {
     data() {
         return {
             openWritePost: false
+        }
+    },
+    computed: {
+        ...mapStores(useUserStore)
+    },
+    methods: {
+        getProfileImage() {
+            if (this.userStore.user.photo) return import.meta.env.VITE_STATIC_ASSET + this.userStore.user.photo
+            return '/default.png'
         }
     }
 }

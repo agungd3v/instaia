@@ -59,17 +59,18 @@ export default {
     async fetchPost() {
       try {
         const http = await this.$axios.get('/post')
+        console.log(http)
         if (http.status && http.data.length > 0) {
           this.postData = http.data.map(data => {
             return {
               user: {
                 name: data.user.name,
-                photo: import.meta.env.VITE_STATIC_ASSET + data.user.photo
+                photo: data.user.photo ? import.meta.env.VITE_STATIC_ASSET + data.user.photo : '/default.png'
               },
               content: {
                 media: import.meta.env.VITE_STATIC_ASSET + data.content,
                 description: data.description,
-                likes: 10
+                likes: data.likes.length
               }
             }
           })

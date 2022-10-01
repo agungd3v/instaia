@@ -36,7 +36,7 @@ export default {
         },
         getProfileImage() {
             if (this.userStore.user.photo) return import.meta.env.VITE_STATIC_ASSET + this.userStore.user.photo
-            return '@/assets/default.png'
+            return '/default.png'
         }
     }
 }
