@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
                 onDelete: 'cascade',
                 timestamps: false
             })
+            this.hasMany(models.Comment, {
+                foreignKey: 'post_id',
+                as: 'comments'
+            })
         }
     }
     Post.init({
